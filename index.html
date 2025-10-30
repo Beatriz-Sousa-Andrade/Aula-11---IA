@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>EsToDoList</title>
+
+</head>
+<body class="h-full bg-gradient-to-br from-pink-50 to-rose-100 dark:from-gray-900 dark:to-gray-950 transition-colors duration-300">
+    
+    <button id="themeToggle" class="fixed top-4 right-4 z-10 p-3 rounded-full bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 border border-pink-200 dark:border-pink-900">
+        <i class="fas fa-moon text-gray-700 dark:text-pink-400"></i>
+    </button>
+    
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="flex flex-col w-full max-w-md gap-5 p-6 shadow-2xl rounded-2xl bg-white dark:bg-gray-900 transition-colors duration-300 border border-pink-100 dark:border-pink-900/50">
+            
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent dark:from-pink-400 dark:to-rose-400">EsToDoList</h1>
+                <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-pink-200/70">
+                    <i class="fas fa-tasks"></i>
+                    <span id="taskCount">0</span> tarefas
+                </div>
+            </div>
+            
+            
+            <div class="relative">
+                <input 
+                    type="text" 
+                    id="searchInput"
+                    placeholder="Pesquisar tarefas..." 
+                    class="border border-pink-300 dark:border-pink-800 rounded-xl p-3 w-full focus:outline-none focus:ring-2 focus:ring-pink-400 dark:focus:ring-pink-600 pl-10 bg-white dark:bg-gray-800 text-gray-800 dark:text-pink-100 transition-colors duration-300 placeholder-gray-500 dark:placeholder-pink-300/50"
+                >
+                <i class="fas fa-search absolute left-3 top-3.5 text-pink-500 dark:text-pink-500"></i>
+            </div>
+            
+            
+            <div class="flex bg-pink-50 dark:bg-gray-800 rounded-xl p-1 transition-colors duration-300 border border-pink-100 dark:border-pink-900/30">
+                <button class="tab-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 tab-active bg-white shadow-sm text-pink-600 dark:bg-gray-700 dark:text-pink-300" data-filter="all">
+                    <i class="fas fa-list mr-2"></i>Todas
+                </button>
+                <button class="tab-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 text-gray-600 dark:text-pink-200/70" data-filter="active">
+                    <i class="fas fa-clock mr-2"></i>Pendentes
+                </button>
+                <button class="tab-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 text-gray-600 dark:text-pink-200/70" data-filter="completed">
+                    <i class="fas fa-check mr-2"></i>Concluídas
+                </button>
+            </div>
+            
+            
+            <div class="flex gap-2">
+                <input 
+                    type="text" 
+                    id="taskInput"
+                    placeholder="Digite uma tarefa aqui:" 
+                    class="border border-pink-300 dark:border-pink-800 rounded-xl p-3 w-full focus:outline-none focus:ring-2 focus:ring-pink-400 dark:focus:ring-pink-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-pink-100 transition-colors duration-300 placeholder-gray-500 dark:placeholder-pink-300/50"
+                >
+                <button 
+                    id="addTaskBtn"
+                    class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 dark:from-pink-600 dark:to-rose-600 dark:hover:from-pink-500 dark:hover:to-rose-500 text-white px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-1 shadow-md hover:shadow-lg"
+                >
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            
+            
+            <div class="relative">
+                <ul id="taskList" class="space-y-3 max-h-80 overflow-y-auto custom-scrollbar pr-2">
+                    
+                </ul>
+                
+                
+                <div id="emptyState" class="text-center py-8">
+                    <i class="fas fa-clipboard-list text-5xl text-gray-300 dark:text-pink-900/50 mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-500 dark:text-pink-200/70">Nenhuma tarefa encontrada</h3>
+                    <p class="text-gray-400 dark:text-pink-200/50 mt-1 text-sm">Adicione uma tarefa para começar</p>
+                </div>
+            </div>
+            
+            
+            <div class="flex justify-between items-center pt-2 border-t border-gray-200 dark:border-pink-900/50">
+                <button id="clearCompleted" class="text-sm text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-300 flex items-center gap-1">
+                    <i class="fas fa-trash"></i>
+                    <span>Limpar concluídas</span>
+                </button>
+                <button id="selectAll" class="text-sm text-pink-600 hover:text-pink-800 dark:text-pink-400 dark:hover:text-pink-300 transition-colors duration-300 flex items-center gap-1">
+                    <i class="fas fa-check-double"></i>
+                    <span>Selecionar todas</span>
+                </button>
+            </div>
+            
+            
+            <div class="text-center text-xs text-gray-500 dark:text-pink-200/50 mt-2">
+                <p>Clique em uma tarefa para marcá-la como concluída</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -3,102 +3,348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>EsToDoList</title>
-
+    <meta name="description" content="EsToDoList - Organize suas tarefas acadêmicas de forma simples e motivadora">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>EsToDoList - Tarefas Acadêmicas</title>
 </head>
 <body class="h-full bg-gradient-to-br from-pink-50 to-rose-100 dark:from-gray-900 dark:to-gray-950 transition-colors duration-300">
     
+    <!-- Botão Tema -->
     <button id="themeToggle" class="fixed top-4 right-4 z-10 p-3 rounded-full bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 border border-pink-200 dark:border-pink-900">
         <i class="fas fa-moon text-gray-700 dark:text-pink-400"></i>
     </button>
-    
-    <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="flex flex-col w-full max-w-md gap-5 p-6 shadow-2xl rounded-2xl bg-white dark:bg-gray-900 transition-colors duration-300 border border-pink-100 dark:border-pink-900/50">
+
+    <!-- Modal de Criação/Edição de Tarefa -->
+    <div id="taskModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl">
+            <h3 id="modalTitle" class="text-xl font-bold text-gray-800 dark:text-white mb-4">Nova Tarefa</h3>
             
-            <div class="flex items-center justify-between">
-                <h1 class="text-3xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent dark:from-pink-400 dark:to-rose-400">EsToDoList</h1>
-                <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-pink-200/70">
-                    <i class="fas fa-tasks"></i>
-                    <span id="taskCount">0</span> tarefas
+            <div class="space-y-4">
+                <!-- Título -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Título *</label>
+                    <input type="text" id="taskTitle" maxlength="100" 
+                           class="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-right">
+                        <span id="titleCount">0</span>/100 caracteres
+                    </div>
+                </div>
+
+                <!-- Descrição -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Descrição</label>
+                    <textarea id="taskDescription" maxlength="500" rows="3"
+                              class="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white resize-none"></textarea>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-right">
+                        <span id="descCount">0</span>/500 caracteres
+                    </div>
+                </div>
+
+                <!-- Data e Hora -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Data</label>
+                        <input type="date" id="taskDueDate"
+                               class="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hora</label>
+                        <input type="time" id="taskDueTime"
+                               class="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                    </div>
+                </div>
+
+                <!-- Prioridade -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Prioridade</label>
+                    <div class="flex gap-2">
+                        <button type="button" data-priority="baixa" class="priority-btn flex-1 py-2 rounded-lg border border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-900/20 dark:text-green-300 transition-all">Baixa</button>
+                        <button type="button" data-priority="media" class="priority-btn flex-1 py-2 rounded-lg border border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300 transition-all">Média</button>
+                        <button type="button" data-priority="alta" class="priority-btn flex-1 py-2 rounded-lg border border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300 transition-all">Alta</button>
+                    </div>
+                </div>
+
+                <!-- Categoria -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Disciplina</label>
+                    <select id="taskCategory" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                        <option value="geral">Geral</option>
+                    </select>
+                </div>
+
+                <!-- Lembrete -->
+                <div class="flex items-center justify-between">
+                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Adicionar lembrete</label>
+                    <input type="checkbox" id="taskReminder" class="toggle-checkbox">
+                </div>
+
+                <div id="reminderOptions" class="hidden">
+                    <select id="reminderTime" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                        <option value="30">30 minutos antes</option>
+                        <option value="60">1 hora antes</option>
+                        <option value="1440">1 dia antes</option>
+                    </select>
                 </div>
             </div>
-            
-            
-            <div class="relative">
-                <input 
-                    type="text" 
-                    id="searchInput"
-                    placeholder="Pesquisar tarefas..." 
-                    class="border border-pink-300 dark:border-pink-800 rounded-xl p-3 w-full focus:outline-none focus:ring-2 focus:ring-pink-400 dark:focus:ring-pink-600 pl-10 bg-white dark:bg-gray-800 text-gray-800 dark:text-pink-100 transition-colors duration-300 placeholder-gray-500 dark:placeholder-pink-300/50"
-                >
-                <i class="fas fa-search absolute left-3 top-3.5 text-pink-500 dark:text-pink-500"></i>
+
+            <div class="flex gap-3 mt-6">
+                <button id="cancelTask" class="flex-1 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Cancelar</button>
+                <button id="saveTask" class="flex-1 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white transition-all">Salvar</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal de Categorias -->
+    <div id="categoriesModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Gerenciar Disciplinas</h3>
             
-            
-            <div class="flex bg-pink-50 dark:bg-gray-800 rounded-xl p-1 transition-colors duration-300 border border-pink-100 dark:border-pink-900/30">
-                <button class="tab-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 tab-active bg-white shadow-sm text-pink-600 dark:bg-gray-700 dark:text-pink-300" data-filter="all">
-                    <i class="fas fa-list mr-2"></i>Todas
-                </button>
-                <button class="tab-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 text-gray-600 dark:text-pink-200/70" data-filter="active">
-                    <i class="fas fa-clock mr-2"></i>Pendentes
-                </button>
-                <button class="tab-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 text-gray-600 dark:text-pink-200/70" data-filter="completed">
-                    <i class="fas fa-check mr-2"></i>Concluídas
-                </button>
+            <div class="space-y-3 mb-4 max-h-60 overflow-y-auto">
+                <!-- Categorias serão adicionadas aqui dinamicamente -->
             </div>
-            
-            
+
             <div class="flex gap-2">
-                <input 
-                    type="text" 
-                    id="taskInput"
-                    placeholder="Digite uma tarefa aqui:" 
-                    class="border border-pink-300 dark:border-pink-800 rounded-xl p-3 w-full focus:outline-none focus:ring-2 focus:ring-pink-400 dark:focus:ring-pink-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-pink-100 transition-colors duration-300 placeholder-gray-500 dark:placeholder-pink-300/50"
-                >
-                <button 
-                    id="addTaskBtn"
-                    class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 dark:from-pink-600 dark:to-rose-600 dark:hover:from-pink-500 dark:hover:to-rose-500 text-white px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-1 shadow-md hover:shadow-lg"
-                >
+                <input type="text" id="newCategoryName" placeholder="Nova disciplina..." 
+                       class="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                <button id="addCategory" class="px-4 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
                     <i class="fas fa-plus"></i>
                 </button>
             </div>
+
+            <div class="flex gap-3 mt-6">
+                <button id="closeCategories" class="flex-1 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Visualização de Tarefas do Dia -->
+    <div id="dayTasksModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl max-h-96 overflow-y-auto">
+            <h3 id="dayModalTitle" class="text-xl font-bold text-gray-800 dark:text-white mb-4"></h3>
+            <div id="dayTasksList" class="space-y-3"></div>
+            <div class="flex gap-3 mt-6">
+                <button id="closeDayModal" class="flex-1 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="flex flex-col w-full max-w-6xl gap-5 p-6 shadow-2xl rounded-2xl bg-white dark:bg-gray-900 transition-colors duration-300 border border-pink-100 dark:border-pink-900/50">
             
-            
+            <!-- Cabeçalho -->
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent dark:from-pink-400 dark:to-rose-400">EsToDoList</h1>
+                    <p class="text-sm text-gray-500 dark:text-pink-200/70 mt-1">Organize suas tarefas acadêmicas</p>
+                </div>
+                <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-pink-200/70">
+                    <button id="viewCategories" class="flex items-center gap-2 px-3 py-2 rounded-lg border border-pink-200 dark:border-pink-800 hover:bg-pink-50 dark:hover:bg-gray-800 transition-colors">
+                        <i class="fas fa-book"></i>
+                        <span>Disciplinas</span>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-tasks"></i>
+                        <span id="taskCount">0</span> tarefas
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barra de Pesquisa e Filtros -->
+            <div class="flex gap-3">
+                <div class="relative flex-1">
+                    <input type="text" id="searchInput" placeholder="Pesquisar tarefas..." 
+                           class="border border-pink-300 dark:border-pink-800 rounded-xl p-3 w-full focus:outline-none focus:ring-2 focus:ring-pink-400 dark:focus:ring-pink-600 pl-10 bg-white dark:bg-gray-800 text-gray-800 dark:text-pink-100 transition-colors duration-300 placeholder-gray-500 dark:placeholder-pink-300/50">
+                    <i class="fas fa-search absolute left-3 top-3.5 text-pink-500 dark:text-pink-500"></i>
+                </div>
+                <select id="sortSelect" class="border border-pink-300 dark:border-pink-800 rounded-xl p-3 bg-white dark:bg-gray-800 text-gray-800 dark:text-pink-100">
+                    <option value="dueDate-asc">Data ↑</option>
+                    <option value="dueDate-desc">Data ↓</option>
+                    <option value="priority-desc">Prioridade ↑</option>
+                    <option value="priority-asc">Prioridade ↓</option>
+                    <option value="title-asc">A-Z</option>
+                    <option value="title-desc">Z-A</option>
+                </select>
+            </div>
+
+            <!-- Abas de Filtro e Visualização -->
+            <div class="flex flex-col gap-3">
+                <!-- Filtros -->
+                <div class="flex bg-pink-50 dark:bg-gray-800 rounded-xl p-1 transition-colors duration-300 border border-pink-100 dark:border-pink-900/30">
+                    <button class="tab-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 tab-active bg-white shadow-sm text-pink-600 dark:bg-gray-700 dark:text-pink-300" data-filter="all">
+                        <i class="fas fa-list mr-2"></i>Todas
+                    </button>
+                    <button class="tab-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 text-gray-600 dark:text-pink-200/70" data-filter="active">
+                        <i class="fas fa-clock mr-2"></i>Pendentes
+                    </button>
+                    <button class="tab-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 text-gray-600 dark:text-pink-200/70" data-filter="completed">
+                        <i class="fas fa-check mr-2"></i>Concluídas
+                    </button>
+                </div>
+
+                <!-- Visualizações -->
+                <div class="flex bg-pink-50 dark:bg-gray-800 rounded-xl p-1 transition-colors duration-300 border border-pink-100 dark:border-pink-900/30">
+                    <button class="view-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 view-active bg-white shadow-sm text-pink-600 dark:bg-gray-700 dark:text-pink-300" data-view="list">
+                        <i class="fas fa-list-ul mr-2"></i>Lista
+                    </button>
+                    <button class="view-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 text-gray-600 dark:text-pink-200/70" data-view="calendar">
+                        <i class="fas fa-calendar mr-2"></i>Calendário
+                    </button>
+                    <button class="view-btn flex-1 py-2 text-center rounded-lg transition-all duration-300 text-gray-600 dark:text-pink-200/70" data-view="kanban">
+                        <i class="fas fa-columns mr-2"></i>Quadro
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botão Adicionar Tarefa -->
+            <button id="addTaskBtn" class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white px-4 py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg font-medium">
+                <i class="fas fa-plus"></i>
+                <span>Nova Tarefa</span>
+            </button>
+
+            <!-- Conteúdo Principal -->
             <div class="relative">
-                <ul id="taskList" class="space-y-3 max-h-80 overflow-y-auto custom-scrollbar pr-2">
-                    
-                </ul>
-                
-                
+                <!-- Visualização Lista -->
+                <div id="listView" class="view-content">
+                    <ul id="taskList" class="space-y-3 max-h-96 overflow-y-auto custom-scrollbar pr-2"></ul>
+                </div>
+
+                <!-- Visualização Calendário -->
+                <div id="calendarView" class="view-content hidden">
+                    <div class="calendar-header flex items-center justify-between mb-4 p-4 bg-pink-50 dark:bg-gray-800 rounded-xl">
+                        <div class="flex items-center gap-4">
+                            <button id="prevYear" class="p-2 rounded-lg hover:bg-pink-100 dark:hover:bg-gray-700 transition-colors" title="Ano anterior">
+                                <i class="fas fa-angle-double-left"></i>
+                            </button>
+                            <button id="prevMonth" class="p-2 rounded-lg hover:bg-pink-100 dark:hover:bg-gray-700 transition-colors" title="Mês anterior">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flex items-center gap-4">
+                            <select id="monthSelect" class="border border-pink-300 dark:border-pink-800 rounded-lg p-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                                <!-- Meses serão preenchidos via JavaScript -->
+                            </select>
+                            <select id="yearSelect" class="border border-pink-300 dark:border-pink-800 rounded-lg p-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                                <!-- Anos serão preenchidos via JavaScript -->
+                            </select>
+                            <button id="goToToday" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg transition-colors text-sm">
+                                Hoje
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <button id="nextMonth" class="p-2 rounded-lg hover:bg-pink-100 dark:hover:bg-gray-700 transition-colors" title="Próximo mês">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <button id="nextYear" class="p-2 rounded-lg hover:bg-pink-100 dark:hover:bg-gray-700 transition-colors" title="Próximo ano">
+                                <i class="fas fa-angle-double-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="calendar-grid grid grid-cols-7 gap-1 mb-2">
+                        <div class="text-center text-sm font-medium text-gray-500 dark:text-gray-400 py-2">Dom</div>
+                        <div class="text-center text-sm font-medium text-gray-500 dark:text-gray-400 py-2">Seg</div>
+                        <div class="text-center text-sm font-medium text-gray-500 dark:text-gray-400 py-2">Ter</div>
+                        <div class="text-center text-sm font-medium text-gray-500 dark:text-gray-400 py-2">Qua</div>
+                        <div class="text-center text-sm font-medium text-gray-500 dark:text-gray-400 py-2">Qui</div>
+                        <div class="text-center text-sm font-medium text-gray-500 dark:text-gray-400 py-2">Sex</div>
+                        <div class="text-center text-sm font-medium text-gray-500 dark:text-gray-400 py-2">Sáb</div>
+                    </div>
+                    <div id="calendarDays" class="calendar-grid grid grid-cols-7 gap-1 min-h-96"></div>
+                </div>
+
+                <!-- Visualização Kanban -->
+                <div id="kanbanView" class="view-content hidden">
+                    <div class="kanban-board grid grid-cols-1 md:grid-cols-3 gap-4 min-h-96">
+                        <!-- Coluna Pendentes -->
+                        <div class="kanban-column bg-pink-50 dark:bg-gray-800 rounded-xl p-4 border border-pink-200 dark:border-pink-800">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-semibold text-gray-800 dark:text-white flex items-center gap-2">
+                                    <i class="fas fa-clock text-orange-500"></i>
+                                    Pendentes
+                                </h3>
+                                <span id="pendingCount" class="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 px-2 py-1 rounded-full text-sm">0</span>
+                            </div>
+                            <div id="pendingTasks" class="kanban-tasks space-y-3 min-h-32"></div>
+                        </div>
+
+                        <!-- Coluna Em Progresso -->
+                        <div class="kanban-column bg-blue-50 dark:bg-gray-800 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-semibold text-gray-800 dark:text-white flex items-center gap-2">
+                                    <i class="fas fa-sync-alt text-blue-500"></i>
+                                    Em Progresso
+                                </h3>
+                                <span id="progressCount" class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full text-sm">0</span>
+                            </div>
+                            <div id="progressTasks" class="kanban-tasks space-y-3 min-h-32"></div>
+                        </div>
+
+                        <!-- Coluna Concluídas -->
+                        <div class="kanban-column bg-green-50 dark:bg-gray-800 rounded-xl p-4 border border-green-200 dark:border-green-800">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-semibold text-gray-800 dark:text-white flex items-center gap-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    Concluídas
+                                </h3>
+                                <span id="completedCount" class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded-full text-sm">0</span>
+                            </div>
+                            <div id="completedKanbanTasks" class="kanban-tasks space-y-3 min-h-32"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estado Vazio -->
                 <div id="emptyState" class="text-center py-8">
                     <i class="fas fa-clipboard-list text-5xl text-gray-300 dark:text-pink-900/50 mb-4"></i>
                     <h3 class="text-lg font-medium text-gray-500 dark:text-pink-200/70">Nenhuma tarefa encontrada</h3>
                     <p class="text-gray-400 dark:text-pink-200/50 mt-1 text-sm">Adicione uma tarefa para começar</p>
                 </div>
             </div>
-            
-            
-            <div class="flex justify-between items-center pt-2 border-t border-gray-200 dark:border-pink-900/50">
-                <button id="clearCompleted" class="text-sm text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-300 flex items-center gap-1">
-                    <i class="fas fa-trash"></i>
-                    <span>Limpar concluídas</span>
-                </button>
+
+            <!-- Dashboard de Progresso -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-gray-200 dark:border-pink-900/50">
+                <div class="bg-pink-50 dark:bg-gray-800 rounded-xl p-4 text-center">
+                    <div class="text-2xl font-bold text-pink-600 dark:text-pink-400" id="totalTasks">0</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Total</div>
+                </div>
+                <div class="bg-green-50 dark:bg-green-900/20 rounded-xl p-4 text-center">
+                    <div class="text-2xl font-bold text-green-600 dark:text-green-400" id="completedTasks">0</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Concluídas</div>
+                </div>
+                <div class="bg-orange-50 dark:bg-orange-900/20 rounded-xl p-4 text-center">
+                    <div class="text-2xl font-bold text-orange-600 dark:text-orange-400" id="pendingTasks">0</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Pendentes</div>
+                </div>
+            </div>
+
+            <!-- Rodapé -->
+            <div class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-pink-900/50">
+                <div class="flex gap-4">
+                    <button id="clearCompleted" class="text-sm text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-300 flex items-center gap-1">
+                        <i class="fas fa-trash"></i>
+                        <span>Limpar concluídas</span>
+                    </button>
+                    <button id="exportData" class="text-sm text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-300 flex items-center gap-1">
+                        <i class="fas fa-download"></i>
+                        <span>Exportar</span>
+                    </button>
+                </div>
                 <button id="selectAll" class="text-sm text-pink-600 hover:text-pink-800 dark:text-pink-400 dark:hover:text-pink-300 transition-colors duration-300 flex items-center gap-1">
                     <i class="fas fa-check-double"></i>
                     <span>Selecionar todas</span>
                 </button>
             </div>
-            
-            
+
+            <!-- Dica -->
             <div class="text-center text-xs text-gray-500 dark:text-pink-200/50 mt-2">
-                <p>Clique em uma tarefa para marcá-la como concluída</p>
+                <p>Clique em uma tarefa para marcá-la como concluída • Use as disciplinas para organizar por matéria</p>
             </div>
         </div>
     </div>
 
     <script src="script.js"></script>
-  </body>
+</body>
 </html>

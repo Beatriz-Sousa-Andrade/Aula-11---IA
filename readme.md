@@ -1,122 +1,147 @@
-# 📝 EsToDoList
+# 📝 EsToDoList - Sistema Completo de Gerenciamento de Tarefas Acadêmicas
 
-Uma aplicação moderna e elegante de lista de tarefas desenvolvida com **HTML**, **Tailwind CSS** e **JavaScript Vanilla**, oferecendo uma experiência completa de gerenciamento de atividades com persistência local.
+Uma aplicação moderna e elegante de lista de tarefas desenvolvida com **HTML**, **Tailwind CSS** e **JavaScript Vanilla**, oferecendo uma experiência completa de gerenciamento de atividades acadêmicas com múltiplas visualizações e persistência local.
 
-link: aula-11-ia.vercel.app
+**Link da Aplicação:** [aula-11-ia.vercel.app](https://aula-11-ia.vercel.app)
 
 ## 🎯 Sobre o Projeto
 
-O **EsToDoList** é um projeto front-end desenvolvido para prática de desenvolvimento web moderno. A aplicação implementa um sistema completo de **CRUD** (Create, Read, Update, Delete) para gerenciamento de tarefas com interface responsiva e persistência de dados no navegador.
+O **EsToDoList** é um projeto front-end desenvolvido para prática de desenvolvimento web moderno. A aplicação implementa um sistema completo de **CRUD** (Create, Read, Update, Delete) para gerenciamento de tarefas acadêmicas com interface responsiva e três modos de visualização diferentes.
 
-**Objetivo principal:** Demonstrar habilidades em desenvolvimento front-end com foco em código limpo, usabilidade e experiência do usuário.
+**Objetivo principal:** Demonstrar habilidades em desenvolvimento front-end com foco em código limpo, usabilidade e experiência do usuário para estudantes e profissionais da educação.
 
 ## ✨ Funcionalidades
 
 ### 🎨 Interface & Design
-
 - ✅ **Design totalmente responsivo** com Tailwind CSS
 - 🌙 **Tema claro/escuro** independente do sistema operacional
 - 🎀 **Paleta rosa moderna** com combinação preto/rosa no tema escuro
 - ⚡ **Animações suaves** e transições fluidas
 - ✨ **Ícones Font Awesome** para melhor experiência visual
+- 📱 **Design mobile-first** - Totalmente responsivo
 
-### 📋 Gerenciamento de Tarefas
-
-- ➕ **Adicionar tarefas** via campo de entrada ou tecla Enter
+### 📋 Gerenciamento de Tarefas (CRUD Completo)
+- ➕ **Adicionar tarefas** com título, descrição, data, hora e prioridade
+- ✏️ **Editar tarefas** através de modal intuitivo
 - 🗑️ **Excluir tarefas** com confirmação de segurança
-- ✅ **Marcar como concluída** (clique no texto ou checkbox)
-- ✏️ **Editar tarefas** através de prompt nativo
-- 📊 **Contador de tarefas** em tempo real
+- ✅ **Marcar como concluída** em todas as visualizações
 - 🔄 **Persistência automática** - Salva automaticamente a cada alteração
-- ⌨️ **Atalhos de teclado** - Enter para adicionar tarefas
 
-### 🔍 Filtros & Busca
+### 🎯 Sistema de Prioridades e Categorias
+- 🚨 **Prioridades visuais**: Alta (vermelho), Média (amarelo), Baixa (verde)
+- 📚 **Sistema de disciplinas**: Categorize tarefas por matéria
+- 🏷️ **Gerenciamento de categorias**: Adicione, edite e exclua disciplinas
 
-- 🔎 **Pesquisa em tempo real** nas tarefas
-- 📂 **Filtros por status**: Todas, Pendentes, Concluídas
-- 🔗 **Filtros combináveis** - Pesquisa + filtro por status funcionam juntos
-- 💾 **Persistência automática** com localStorage
+### 📅 Múltiplas Visualizações
+#### 📋 **Visualização em Lista**
+- Lista tradicional de tarefas com todos os detalhes
+- Filtros por status (Todas, Pendentes, Concluídas)
+- Ordenação por data, prioridade ou título
 
-### ⚡ Funcionalidades Avançadas
+#### 🗓️ **Visualização em Calendário**
+- Calendário mensial interativo
+- Navegação entre meses e anos
+- Visualização de tarefas por dia
+- Cores indicativas para status das tarefas
+- Modal detalhado de tarefas do dia
 
+#### 📊 **Visualização Kanban**
+- Quadro com três colunas: Pendentes, Em Progresso, Concluídas
+- **Drag & Drop** entre colunas
+- Contadores visuais por status
+- Cards coloridos com informações resumidas
+
+### 🔔 Sistema de Lembretes
+- ⏰ **Lembretes configuráveis**: 30min, 1h ou 1 dia antes
+- 🔔 **Notificações do navegador** (com permissão)
+- 📅 **Integração com datas e horários**
+
+### 🔍 Sistema de Busca e Filtros
+- 🔎 **Pesquisa em tempo real** no título e descrição
+- 📂 **Filtros combináveis** - Pesquisa + filtro por status
+- 🔄 **Ordenação múltipla**: Data, prioridade, título (asc/desc)
+
+### 📊 Dashboard e Estatísticas
+- 📈 **Métricas em tempo real**: Total, Concluídas, Pendentes
+- 🎯 **Contadores por status** em todas as visualizações
+- 📱 **Cards informativos** com progresso geral
+
+### ⚙️ Funcionalidades Avançadas
 - 🌟 **Selecionar todas** as tarefas de uma vez
 - 🧹 **Limpar concluídas** em lote
-- 🎯 **Estado vazio dinâmico** com mensagens contextuais
-- 🔄 **Atualizações em tempo real** da interface
-- 📱 **Design mobile-first** - Totalmente responsivo
-- 🔔 **Confirmações de segurança** para ações destrutivas
+- 💾 **Exportação de dados** em JSON
+- 🏆 **Sistema de conquistas** (Pioneiro, Produtivo)
+- 🎨 **Tema personalizável** com persistência
 
 ## 🛠️ Tecnologias Utilizadas
 
 ### Frontend Principal
-
 - **HTML5** - Estrutura semântica e acessível
 - **Tailwind CSS v4** (via CDN) - Estilização e utilitários
 - **JavaScript ES6+** - Lógica da aplicação
 - **CSS3** - Gradients, transitions e custom properties
 
 ### Armazenamento & Persistência
-
 - **Web Storage API** - `localStorage` para dados persistentes
 - **JSON** - Serialização dos dados das tarefas
 
 ### Dependências Externas (via CDN)
-
 - **Font Awesome 6.4.0** - Conjunto de ícones
 - **Tailwind CSS Browser** - Framework CSS utility-first
 
 ### APIs do Navegador
-
 - **DOM API** - Manipulação dinâmica de elementos
-- **Window Object** - Alert, confirm, prompt para interações
+- **Web Notifications API** - Sistema de lembretes
+- **Drag & Drop API** - Funcionalidade Kanban
+- **Window Object** - Alert, confirm para interações
 - **Event Listeners** - Gestão de eventos do usuário
 
 ## 🚀 Como Executar
 
 ### Método Simples (Recomendado)
-
 1. **Baixe os arquivos** do projeto:
    - `index.html`
    - `script.js`
 
 2. **Abra o arquivo** `index.html` diretamente no seu navegador
 
-
 ### Pré-requisitos
-
 - Navegador moderno (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
 - Conexão com internet (para carregar CDNs)
+- Permissão para notificações (opcional, para lembretes)
 
 ## 📖 Guia de Uso
 
 ### 📝 Adicionando Tarefas
+1. Clique no botão **"Nova Tarefa"**
+2. Preencha o título (obrigatório) e descrição (opcional)
+3. Selecione data e hora de vencimento
+4. Escolha a prioridade e disciplina
+5. Configure lembretes se necessário
+6. Clique em **"Salvar"**
 
-1. Digite a tarefa no campo "Digite uma tarefa aqui:"
-2. Pressione `Enter` ou clique no botão `+` (ícone de adição)
+### 🔄 Alternando entre Visualizações
+- **Lista**: Visualização tradicional com todos os detalhes
+- **Calendário**: Visão mensal com tarefas organizadas por data
+- **Quadro (Kanban)**: Organização por status com drag & drop
 
-### 🎯 Gerenciando Tarefas Individuais
+### 🗓️ Usando o Calendário
+- Navegue entre meses usando as setas ou selects
+- Clique em um dia para ver todas as tarefas
+- Tarefas são coloridas por status (atrasadas, hoje, futuras)
+- Clique em uma tarefa no calendário para editá-la
 
-- **Concluir/Reabrir**: Clique no texto da tarefa ou no checkbox
-- **Editar**: Clique no ícone ✏️ (lápis) → abre um prompt de edição
-- **Excluir**: Clique no ícone 🗑️ (lixeira) → solicita confirmação
+### 📊 Trabalhando com o Kanban
+- **Arraste e solte** tarefas entre colunas
+- Clique em uma tarefa para alternar seu status
+- Use os botões de edição e exclusão em cada card
+- Visualize contadores por coluna
 
-### 🔍 Filtrando e Pesquisando
-
-- **Pesquisar**: Use o campo com ícone de lupa 🔎
-- **Filtrar por status**:
-  - **Todas** → Exibe todas as tarefas
-  - **Pendentes** → Apenas tarefas não concluídas  
-  - **Concluídas** → Apenas tarefas finalizadas
-
-### ⚙️ Funcionalidades em Lote
-
-- **Selecionar Todas**: Marca/desmarca todas as tarefas
-- **Limpar Concluídas**: Remove todas as tarefas finalizadas (com confirmação)
-
-### 🎨 Personalização de Tema
-
-- Clique no botão no **canto superior direito** para alternar entre tema claro e escuro
-- Sua preferência é salva automaticamente
+### 🏷️ Gerenciando Disciplinas
+1. Clique no botão **"Disciplinas"** no cabeçalho
+2. Adicione novas disciplinas usando o campo de texto
+3. Exclua disciplinas (as tarefas serão movidas para "Geral")
+4. Use as disciplinas para organizar tarefas por matéria
 
 ## 📁 Estrutura do Projeto
 
@@ -124,105 +149,94 @@ O **EsToDoList** é um projeto front-end desenvolvido para prática de desenvolv
 EsToDoList/
 │
 ├── index.html          # Estrutura principal da aplicação
-├── script.js           # Lógica completa JavaScript
+├── script.js           # Lógica completa JavaScript (CRUD, Calendário, Kanban)
 └── README.md           # Este arquivo de documentação
 ```
-
-### Arquivos Referenciados
-
-- `../static/style.css` → Estilos adicionais (se existir)
-- CDNs externas para Tailwind CSS e Font Awesome
 
 ## 🔧 Características Técnicas
 
 ### Arquitetura da Aplicação
-
 - **Padrão MVC simplificado** → Separação clara de responsabilidades
 - **Estado centralizado** → Array `tarefas` como fonte da verdade
 - **Manipulação DOM eficiente** → Atualizações seletivas da interface
 
 ### Estrutura de Dados
-
 ```javascript
 // Modelo de uma tarefa
 {
-  id: Date.now(),        // Identificador único baseado em timestamp
-  texto: "Descrição",    // Conteúdo da tarefa
-  concluida: false       // Status de conclusão
+  id: Date.now(),              // Identificador único
+  texto: "Descrição",          // Título da tarefa
+  descricao: "Detalhes",       // Descrição opcional
+  prioridade: "media",         // alta, media, baixa
+  categoria: "Matemática",     // Disciplina
+  concluida: false,            // Status de conclusão
+  emProgresso: false,          // Status para Kanban
+  dataCriacao: "2024-01-01",   // Data de criação
+  dataVencimento: "2024-01-15",// Data de vencimento
+  lembrete: true,              // Lembrete ativo
+  tempoLembrete: 30            // Minutos antes
 }
 ```
 
-### Sistema de Persistência
+### Sistema de Visualizações
+- **Lista**: Renderização dinâmica baseada em filtros
+- **Calendário**: Geração dinâmica de grid mensal
+- **Kanban**: Sistema de drag & drop nativo
 
+### Sistema de Persistência
 - **localStorage** → Armazenamento no navegador
 - **Serialização JSON** → Conversão automática dos dados
 - **Carregamento automático** → Dados recuperados ao iniciar
 
-### Sistema de Tema
-
-- **Independente do SO** → Não segue preferência do sistema
-- **Persistente** → Preferência salva no `localStorage`
-- **Ícones dinâmicos** → Lua para claro, Sol para escuro
-
-## 🎨 Personalização
-
-### Cores e Tema
-
-O projeto utiliza uma paleta rosa personalizável:
-
-```html
-class="bg-gradient-to-br from-pink-50 to-rose-100 dark:from-gray-900 dark:to-gray-950"
-```
-
-### Modificando Cores
-
-Para alterar a paleta de cores, modifique as classes Tailwind no `index.html`:
-
-```html
-class="bg-blue-500" em vez de "bg-pink-500"
-class="text-blue-600" em vez de "text-pink-600"
-```
-
-### Customização Avançada
-
-- **Layout**: Ajuste classes de espaçamento (`p`, `m`, `gap`)
-- **Tamanhos**: Modifique utilitários de tamanho (`text`, `w`, `h`)
-- **Animações**: Controle durações (`duration`) e transições
-
 ## 🌟 Destaques do Código
 
-### Principais Funções JavaScript
+### Principais Módulos JavaScript
+- `inicializarAplicacao()` → Configuração inicial completa
+- `exibirCalendario()` → Renderização do calendário interativo
+- `exibirKanban()` → Sistema de quadros com drag & drop
+- `filtrarTarefas()` → Sistema de busca e ordenação
+- `salvarDados()` → Persistência automática
 
-- `carregarTarefasSalvas()` → Recuperação de dados persistentes
-- `salvarTarefas()` → Persistência automática no `localStorage`  
-- `exibirTarefas()` → Renderização eficiente da interface
-- `filtrarTarefasPorFiltro()` → Sistema de filtros combináveis
+### Funcionalidades Avançadas Implementadas
+- **Calendário dinâmico** com navegação completa
+- **Sistema Kanban** com drag & drop nativo
+- **Modais interativos** para diferentes contextos
+- **Sistema de notificações** baseado em tempo
+- **Responsividade completa** em todos os componentes
 
 ### Tratamento de Erros
-
-- Validação de entrada vazia
+- Validação de formulários
 - Confirmações para ações destrutivas
-- Fallback para estado vazio
-
-### Performance
-
-- **Atualizações otimizadas** → Re-renderização apenas quando necessário
-- **Event listeners eficientes** → Delegation pattern implícito
-- **Armazenamento leve** → Dados minimalistas no `localStorage`
+- Fallback para estado vazio em todas as visualizações
+- Verificação de permissões de notificação
 
 ## 🔄 Fluxo de Dados
 
-1. **Entrada** → Campo de texto + botão/Enter
-2. **Processamento** → Validação → Criação objeto → Array push
-3. **Persistência** → JSON.stringify → localStorage
-4. **Renderização** → Filtragem → DOM manipulation
-5. **Feedback** → Atualização contador → Estado vazio
+1. **Entrada** → Modal de tarefa ou ações do usuário
+2. **Validação** → Verificação de dados obrigatórios
+3. **Processamento** → Atualização do estado central
+4. **Persistência** → localStorage com serialização JSON
+5. **Renderização** → Atualização da visualização ativa
+6. **Feedback** → Atualização de dashboard e contadores
 
-## 🎪 Sistema de Design
+## 🎨 Sistema de Design
 
 - **Design System** → Cores consistentes (rosa/vermelho)
 - **Dark Mode** → Tema escuro independente do sistema
 - **Typography** → Hierarquia visual clara
-- **Spacing** → Escala consistente de margins e paddings
-- **Feedback Visual** → Estados hover, focus e active em todos os elementos
+- **Componentes Reutilizáveis** → Modais, cards, botões
+- **Feedback Visual** → Estados hover, focus em todos os elementos
 - **Animações CSS** → Transições suaves em todos os elementos interativos
+
+## 📈 Próximas Melhorias Potenciais
+
+- [ ] Importação de dados
+- [ ] Sincronização com nuvem
+- [ ] Modo de estudo com Pomodoro
+- [ ] Relatórios e estatísticas avançadas
+- [ ] Lembretes recorrentes
+- [ ] Colaboração entre usuários
+
+---
+
+
